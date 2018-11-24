@@ -10,34 +10,28 @@ namespace CG_16_2_Cheese_MVC.Controllers
 {
     public class HomeController : Controller
     {
+        static private List<string> Cheeses = new List<string>();
+
+        // GET: /<controller>/
         public IActionResult Index()
         {
+            ViewBag.cheeses = Cheeses;
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
+        public IActionResult Add()
         {
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpPost]
+        [Route("/Cheese/Add")]
+        public IActionResult NewCheese(string name)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            Cheeses.Add(name);
+
+            return Redirect("/cheese");
         }
+
     }
 }
